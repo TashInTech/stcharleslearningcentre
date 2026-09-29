@@ -175,10 +175,9 @@
   }
   .brand{display:flex;align-items:center;gap:12px;min-width:0;overflow:hidden;}
   .brand img{height:44px;width:auto;flex:none;}
-  .brand-text{font-family:'Baloo 2';font-weight:700;font-size:1.05rem;color:var(--plum-deep);line-height:1.1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .brand-text{font-family:'Baloo 2';font-weight:700;font-size:1.05rem;color:var(--plum-deep);line-height:1.1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:none;}
   .brand-text span{display:block;font-family:'Work Sans';font-weight:500;font-size:0.68rem;color:var(--muted);letter-spacing:0.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .nav-cta{flex:none;}
-
   .nav-links{display:flex;align-items:center;gap:6px;}
   .nav-links a{
     padding:10px 16px;
@@ -336,7 +335,8 @@
   /* ---------- IMPACT ---------- */
   .section{padding:88px 0;}
   .section-head{text-align:center;max-width:620px;margin:0 auto 46px;}
-  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);position:relative;display:inline-block;padding-bottom:12px;}
+  .section-head h2::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80%;height:5px;background:var(--accent);border-radius:3px;}
   .impact{background:var(--cream);position:relative;}
   .impact-grid{
     display:grid;
@@ -486,6 +486,306 @@
   .project-progress .fill{height:100%;width:38%;border-radius:999px;background:var(--plum-deep);}
   .project-progress .labels{display:flex;justify-content:space-between;margin-top:8px;font-weight:700;font-size:0.85rem;}
   @media (max-width:900px){.project .wrap{grid-template-columns:1fr;}.project .wrap{direction:ltr;}}
+
+  /* ---------- SUPPORT ---------- */
+  .support{background:linear-gradient(135deg, #e8f4ff, #f0e6ff);position:relative;overflow:hidden;}
+  .support-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .support-card{
+    background:#fff;
+    border:3px dashed #0066cc;
+    border-radius:20px;
+    padding:32px 24px;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,102,204,0.15);
+    transition:transform .3s ease, box-shadow .3s ease;
+    position:relative;
+  }
+  .support-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,102,204,0.25);}
+  .support-card-icon{font-size:48px;margin-bottom:12px;}
+  .support-card h3{font-size:1.15rem;margin-bottom:8px;color:var(--ink);}
+  .support-card .provider-name{font-size:0.85rem;color:var(--muted);font-weight:600;margin-bottom:12px;}
+  .support-card .merchant-code{
+    background:#f5f5f5;
+    padding:8px 12px;
+    border-radius:8px;
+    font-family:monospace;
+    font-size:0.8rem;
+    color:#0066cc;
+    font-weight:700;
+    margin-bottom:12px;
+    word-break:break-all;
+  }
+  .support-card p{font-size:0.9rem;color:var(--muted);line-height:1.6;}
+  .support-button-group{margin-top:32px;text-align:center;display:flex;justify-content:center;gap:12px;}
+  
+  .btn-support-open{
+    background:linear-gradient(135deg, #0066cc, #0052a3);
+    color:#fff;
+    padding:14px 32px;
+    border-radius:50px;
+    font-weight:700;
+    font-size:0.95rem;
+    box-shadow:0 0 0 0 rgba(0,102,204,0.7);
+    animation:supportPulse 2s ease-in-out infinite;
+    position:relative;
+    overflow:hidden;
+  }
+  .btn-support-open:hover{transform:scale(1.05);}
+  .btn-support-open::before{
+    content:"";
+    position:absolute;
+    top:50%;left:50%;
+    width:100%;height:100%;
+    background:radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+    transform:translate(-50%,-50%);
+    opacity:0;
+    animation:supportGlow 2s ease-in-out infinite;
+  }
+  @keyframes supportPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,102,204,0.7);}50%{box-shadow:0 0 0 15px rgba(0,102,204,0);}}
+  @keyframes supportGlow{0%{opacity:0;transform:translate(-50%,-50%) scale(0.8);}50%{opacity:1;}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2);}}
+
+  .support-modal{
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .support-modal.open{opacity:1;pointer-events:auto;}
+  .support-modal-container{
+    background:#fff;
+    border-radius:24px;
+    padding:40px;
+    max-width:500px;
+    width:90%;
+    max-height:88vh;
+    overflow-y:auto;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    animation:modalSlideIn .4s ease;
+    position:relative;
+  }
+  .support-modal-container::-webkit-scrollbar{display:none;}
+  @keyframes modalSlideIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+  .support-modal-close{
+    position:absolute;
+    top:16px;right:16px;
+    width:36px;height:36px;
+    background:none;
+    border:none;
+    font-size:28px;
+    color:var(--muted);
+    cursor:pointer;
+    transition:color .2s ease;
+  }
+  .support-modal-close:hover{color:var(--ink);}
+  .support-modal h2{margin-bottom:8px;color:var(--ink);}
+  .support-modal-subtitle{color:var(--muted);font-size:0.95rem;margin-bottom:24px;}
+  .support-modal-options{display:flex;flex-direction:column;gap:16px;margin-bottom:24px;}
+  .support-option{
+    border:2px solid #f0f0f0;
+    border-radius:16px;
+    padding:18px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .3s ease;
+  }
+  .support-option:hover{border-color:#0066cc;background:#f8f9ff;}
+  .support-option-title{font-weight:700;font-size:1.1rem;margin-bottom:4px;}
+  .support-option-desc{font-size:0.85rem;color:var(--muted);margin-bottom:8px;}
+  .support-option-number{font-family:monospace;font-size:0.9rem;color:var(--ink);font-weight:600;}
+  .support-option.mtn{border-color:#ffc300;}
+  .support-option.mtn:hover{background:#fffaeb;}
+  .support-option.airtel{border-color:#ff0000;}
+  .support-option.airtel:hover{background:#fff0f0;}
+  .support-ussd-input{
+    width:100%;
+    padding:12px;
+    border:2px solid #e0e0e0;
+    border-radius:12px;
+    font-family:monospace;
+    font-size:0.9rem;
+    margin:8px 0 4px;
+    background:#f9f9f9;
+  }
+  .support-ussd-input:focus{outline:none;border-color:#0066cc;background:#fff;}
+  .support-copy-btn{
+    font-size:0.75rem;
+    padding:4px 8px;
+    background:#0066cc;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .support-copy-btn:hover{background:#0052a3;}
+  .support-option-code{
+    font-size:0.8rem;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .support-actions{display:flex;flex-direction:column;gap:12px;}
+  .support-actions .btn{width:100%;text-align:center;}
+  .btn-mtn{background:linear-gradient(135deg, #ffc300, #ffb300);color:#000;}
+  .btn-mtn:hover{background:linear-gradient(135deg, #ffb300, #ffa300);}
+  .btn-airtel{background:linear-gradient(135deg, #ff0000, #cc0000);color:#fff;}
+  .btn-airtel:hover{background:linear-gradient(135deg, #cc0000, #990000);}
+  .support-alt-options{border-top:1px solid #e0e0e0;padding-top:16px;margin-top:16px;}
+  .support-alt-options h4{font-size:0.9rem;margin-bottom:10px;color:var(--ink);}
+  .support-alt-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 16px;
+    border:2px solid #e0e0e0;
+    border-radius:10px;
+    background:#fff;
+    cursor:pointer;
+    font-weight:600;
+    font-size:0.9rem;
+    transition:all .2s ease;
+    margin-right:8px;
+  }
+  .support-alt-btn:hover{border-color:#0066cc;background:#f8f9ff;}
+
+  @media (max-width:900px){.support-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.support-grid{grid-template-columns:1fr;}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px;}
+  .faq-item{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .faq-item.open{border-color:var(--accent);box-shadow:var(--shadow-sm);}
+  .faq-question{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:20px 24px;
+    text-align:left;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--plum-deep);
+  }
+  .faq-question .faq-icon{
+    flex:none;
+    width:30px;height:30px;
+    border-radius:50%;
+    background:var(--cream);
+    color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;font-weight:700;
+    transition:transform .3s ease, background .3s ease;
+  }
+  .faq-item.open .faq-question .faq-icon{transform:rotate(45deg);background:var(--accent);color:#fff;}
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .faq-answer p{padding:0 24px 20px;color:var(--muted);line-height:1.7;font-size:0.95rem;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{background:var(--cream);}
+  .testimonial-stage{
+    position:relative;
+    max-width:720px;
+    margin:0 auto;
+    min-height:260px;
+  }
+  .testimonial-card{
+    position:absolute;
+    inset:0;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    padding:36px 40px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+    pointer-events:none;
+  }
+  .testimonial-card.active{opacity:1;transform:translateY(0);pointer-events:auto;}
+  .testimonial-quote{font-size:1.05rem;line-height:1.75;color:var(--ink);font-style:italic;}
+  .testimonial-quote::before{content:"“";color:var(--accent);font-size:1.4rem;}
+  .testimonial-quote::after{content:"”";color:var(--accent);font-size:1.4rem;}
+  .testimonial-name{margin-top:18px;font-family:'Baloo 2', sans-serif;font-weight:700;color:var(--plum-deep);}
+  .testimonial-role{font-size:0.85rem;color:var(--muted);margin-top:2px;}
+  .testimonial-dots{display:flex;justify-content:center;gap:8px;margin-top:28px;flex-wrap:wrap;}
+  .testimonial-dot{width:9px;height:9px;border-radius:50%;background:var(--line);transition:background .3s ease, transform .3s ease;}
+  .testimonial-dot.active{background:var(--accent);transform:scale(1.25);}
+
+  /* ---------- INQUIRY FORM ---------- */
+  .inquiry-form{
+    max-width:640px;
+    margin:0 auto;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .inquiry-field label{display:block;font-weight:600;margin-bottom:8px;color:var(--ink);font-size:0.92rem;}
+  .inquiry-field input,
+  .inquiry-field textarea{
+    width:100%;
+    padding:13px 14px;
+    border:2px solid var(--line);
+    border-radius:10px;
+    font-family:inherit;
+    font-size:0.95rem;
+    color:var(--ink);
+    background:#fbfaff;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .inquiry-field input:focus,
+  .inquiry-field textarea:focus{outline:none;border-color:var(--accent);background:#fff;}
+  .inquiry-field textarea{resize:vertical;min-height:110px;}
+  .inquiry-note{font-size:0.82rem;color:var(--muted);}
+  .inquiry-error{display:none;font-size:0.82rem;color:#c0392b;margin-top:6px;}
+  .inquiry-error.show{display:block;}
+
+  /* ---------- SPONSOR A CHILD ---------- */
+  .sponsor{background:linear-gradient(135deg,var(--cream),#fff);}
+  .sponsor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px;}
+  .sponsor-tier{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:32px 26px;
+    text-align:center;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .sponsor-tier:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:var(--accent);}
+  .sponsor-tier.featured{border-color:var(--accent);position:relative;}
+  .sponsor-tier.featured::before{
+    content:"Most Impact";
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:var(--accent);color:#fff;font-size:0.72rem;font-weight:700;
+    padding:5px 14px;border-radius:999px;letter-spacing:.03em;
+  }
+  .sponsor-tier-icon{font-size:38px;margin-bottom:10px;}
+  .sponsor-tier h3{font-size:1.1rem;margin-bottom:6px;}
+  .sponsor-tier .sponsor-price{font-family:'Baloo 2', sans-serif;font-weight:700;color:var(--accent);font-size:1.3rem;margin-bottom:12px;}
+  .sponsor-tier p{font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+  @media (max-width:900px){.sponsor-grid{grid-template-columns:1fr;}}
 
   /* ---------- CONTACT ---------- */
   .contact{background:var(--cream);}
@@ -700,45 +1000,117 @@
   .phone-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .phone-row .phone-link{display:inline;}
   .phone-row .sep{color:var(--muted);}
-</style>
-</head>
-<body>
-<noscript><style>.reveal-left,.reveal-right{opacity:1!important;transform:none!important;}</style></noscript>
+  .topbar-item strong{font-weight:700;}
+  .topbar-item.email-link{white-space:nowrap;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:rise .7s ease .16s both;}
+  .btn-whatsapp{
+    background:linear-gradient(135deg,#7ef9b0,#25D366);
+    color:#0b2f1d;
+    box-shadow:0 0 0 8px rgba(37,211,102,0.12), 0 18px 38px -12px rgba(37,211,102,0.9);
+    animation:whatsappPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes whatsappPulse{
+    0%, 100%{transform:translateY(0) scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0.35),0 18px 38px -12px rgba(37,211,102,0.8);}
+    50%{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 10px rgba(37,211,102,0.12),0 20px 42px -10px rgba(37,211,102,1);}
+  }
+  .btn-support{
+    background:rgba(255,255,255,0.09);
+    border:1.5px solid rgba(255,255,255,0.5);
+    color:#fff;
+    backdrop-filter:blur(4px);
+  }
+  .hero-art{
+    position:absolute;right:5%;bottom:8%;width:min(32vw,420px);z-index:1;opacity:.8;pointer-events:none;
+  }
+  .hero-art .orb{
+    position:absolute;border-radius:50%;filter:blur(6px);opacity:.9;
+  }
+  .hero-art .orb.one{width:210px;height:210px;background:rgba(107,196,155,0.35);right:120px;bottom:10px;}
+  .hero-art .orb.two{width:140px;height:140px;background:rgba(255,255,255,0.12);right:40px;bottom:90px;}
+  .hero-art .orb.three{width:70px;height:70px;background:rgba(255,255,255,0.2);right:220px;bottom:140px;}
+  .hero-art .spark{
+    position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 18px rgba(255,255,255,0.8);
+  }
+  .hero-art .spark.s1{right:240px;bottom:28px;}
+  .hero-art .spark.s2{right:100px;bottom:180px;}
+  .hero-art .spark.s3{right:300px;bottom:120px;}
+  .hero-copy .hero-tag-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .hero-subtag{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);color:#dff8eb;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+  .hero-copy .lead strong{color:#fff;font-weight:700;}
 
-<!-- ================= HEADER ================= -->
+  .director-section{padding:28px 0 12px;background:linear-gradient(180deg, #fff, var(--cream));}
+  .director-grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:flex-start;}
+  .director-photo-card{position:relative;background:#fff;border-radius:28px;overflow:hidden;box-shadow:var(--shadow-lg);padding:28px;display:grid;grid-template-columns:0.8fr 1.2fr;gap:24px;align-items:flex-start;}
+  .director-photo-card .photo-wrap{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-sm);border:4px solid #fff;}
+  .director-photo-card .photo-wrap img{width:100%;height:360px;object-fit:cover;display:block;}
+  .director-badge{position:absolute;left:16px;bottom:16px;background:var(--plum);color:#fff;border-radius:16px;padding:12px 16px;box-shadow:var(--shadow-sm);z-index:10;}
+  .director-badge strong{display:block;font-size:1.2rem;font-family:'Baloo 2';}
+  .director-badge span{display:block;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;opacity:0.8;}
+  .director-copy{position:relative;}
+  .director-mark{font-family:'Caveat';font-size:3rem;line-height:1;color:var(--accent);opacity:0.75;}
+  .director-copy h3{font-size:clamp(1.8rem,3vw,2.5rem);margin:10px 0 12px;}
+  .director-copy .intro{color:var(--muted);font-size:1.02rem;line-height:1.8;}
+  .director-quote{
+    position:relative;margin-top:20px;padding:20px 22px;border-left:0;background:rgba(91,26,107,0.03);border-radius:18px;box-shadow:inset 0 0 0 1px rgba(91,26,107,0.04);
+  }
+  .director-quote p{color:var(--ink);font-size:1.02rem;line-height:1.8;}
+  .director-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+  .director-more{display:none;} .director-more.open{display:block;margin-top:18px;}
+  .director-more p{color:var(--muted);line-height:1.8;font-size:1rem;}
+  .director-toggle{
+    border-radius:999px; padding:8px 14px; font-size:0.75rem; font-weight:700; line-height:1; display:inline-flex; align-items:center; gap:8px; min-height:36px;
+  }
+  .director-toggle::after{
+    content:"→"; font-size:1rem; line-height:1; display:inline-block; transform:translateY(-1px);
+  }
+  .purpose-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;transition:transform .25s ease, box-shadow .25s ease;}
+  .purpose-card:hover{transform:translateY(-4px);}
+  .purpose-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .card-image{position:relative;overflow:hidden;aspect-ratio:16/10;}
+  .card-image img{width:100%;height:100%;object-fit:cover;}
+  .purpose-badge{position:absolute;top:16px;left:16px;background:var(--plum);color:#fff;padding:6px 14px;border-radius:999px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;}
+  .card-content{padding:28px 24px;}
+  .purpose-card h3{margin-bottom:12px;color:var(--plum-deep);font-size:1.2rem;}
+  .purpose-card p{color:var(--muted);line-height:1.75;font-size:0.95rem;}
+  @media (max-width:900px){.director-photo-card{grid-template-columns:1fr;}.purpose-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.purpose-grid{grid-template-columns:1fr;}}
+</style>
+
+<body>
 <header class="site-header">
   <div class="topbar">
     <div class="wrap">
       <div class="topbar-left">
-        <a class="topbar-item" href="tel:+256705505474">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Phone: 0705 505 474
+        <a class="topbar-item" href="mailto:stcharleslearningcentre@gmail.com">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"></path><path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+          Email: stcharleslearningcentre@gmail.com
         </a>
-        <span class="topbar-item">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          Open 9:30am – 5:30pm
-        </span>
+        <a class="topbar-item" href="tel:+256702859676">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Director: 0702 859 676
+        </a>
       </div>
       <div class="topbar-social">
-        <a href="#" aria-label="Facebook"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
-        <a href="#" aria-label="LinkedIn"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48z"/></svg></a>
-        <a href="#" aria-label="YouTube"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3 3 0 0 0-2.1-2.12C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.57A3 3 0 0 0 .5 6.19 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.81 3 3 0 0 0 2.1 2.12C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.57a3 3 0 0 0 2.1-2.12A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.81zM9.6 15.6V8.4L15.8 12z"/></svg></a>
+        <a href="https://wa.me/256702859676" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.1 0a11.9 11.9 0 0 0-10.3 18.17L0 24l5.97-1.57A11.9 11.9 0 0 0 12.1 24C18.73 24 24 18.72 24 12.1c0-3.18-1.24-6.17-3.48-8.62zm-8.42 18.07h-.01a9.86 9.86 0 0 1-5.02-1.38l-.36-.21-3.54.93 1-3.44-.24-.36A9.84 9.84 0 1 1 12.1 21.55zm5.4-7.33c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.39-1.47-.88-.78-1.48-1.74-1.65-2.03-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.68-1.64-.93-2.25-.24-.58-.49-.5-.68-.51l-.58-.01a1.12 1.12 0 0 0-.82.38A2.72 2.72 0 0 0 6.2 8.8c0 1.53 1.3 2.02 1.48 2.16.17.13 2.02 3.08 4.9 4.32.68.29 1.21.47 1.62.6.68.21 1.29.18 1.77.11.54-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.28-.2-.58-.35z"></path></svg></a>
+        <a href="mailto:stcharleslearningcentre@gmail.com" aria-label="Email"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5.33L4 8.2V6l8 5.33L20 6v2.2z"></path></svg></a>
       </div>
     </div>
   </div>
 
   <nav class="mainnav">
     <div class="wrap">
-      <a class="brand" href="#top">
-        <img src="images/stcharles_logo.png" alt="St.Charles Learning Center crest">
-        <span class="brand-text">St.Charles<span>Learning Center · Kamarya Village</span></span>
+      <a class="brand" href="#top" aria-label="St. Charles Learning Centre home">
+        <img src="images/charles-badge.jpeg" alt="St.Charles Learning Centre crest">
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#top" class="active">Home</a></li>
-        <li><a href="#about">About Us</a></li>
+        <li><a href="#about">About</a></li>
         <li><a href="#objectives">Impact</a></li>
         <li><a href="#project">Projects</a></li>
-        <li><a href="#gallery">Media</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="mailto:stcharleslearningcentre@gmail.com">Email</a></li>
+        <li><a href="tel:+256702859676">Director</a></li>
       </ul>
       <div class="nav-cta">
         <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
@@ -747,255 +1119,540 @@
   </nav>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero" id="top">
-  <div class="hero-bg" id="heroBg" style="background-image:url('images/class2.webp')"></div>
-  <div class="hero-overlay"></div>
-  <div class="wrap">
-    <div class="hero-copy hero-card">
-      <span class="hero-tag"><span class="hero-star">✦</span> We learn, we grow!</span>
-      <h1>Quality education for <em>every child</em> in Kamarya Village.</h1>
-      <p class="lead">St.Charles Learning Center gives vulnerable children a safe, inclusive place to learn — and gives their community a place to grow together.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-accent" href="#about">Know more</a>
-        <a class="btn btn-plum" href="#contact">Get in touch</a>
+<main>
+  <section class="hero" id="top">
+    <div class="hero-bg" id="heroBg" style="background-image:url('images/class2.webp')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orb one"></div>
+      <div class="orb two"></div>
+      <div class="orb three"></div>
+      <div class="spark s1"></div>
+      <div class="spark s2"></div>
+      <div class="spark s3"></div>
+    </div>
+    <div class="wrap">
+      <div class="hero-copy hero-card">
+        <div class="hero-tag-wrap">
+          <span class="hero-tag"><span class="hero-star">✦</span> We learn, we grow!</span>
+          <span class="hero-subtag">Committed to excel</span>
+        </div>
+        <h1>ST. CHARLES<br><em>LEARNING CENTRE</em></h1>
+        <p class="lead"><strong>We are committed to excel.</strong> We empower vulnerable children through safe, inclusive, and life-changing education in Kamarya Village, Uganda.</p>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="#about">Learn more</a>
+          <a class="btn btn-whatsapp" href="https://wa.me/256702859676" target="_blank" rel="noopener">WhatsApp Us</a>
+          <button class="btn btn-support" type="button" id="openSupportModal">Support Us</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="hero-arrows">
-    <button class="hero-arrow" id="heroNext" aria-label="Next photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
-    <button class="hero-arrow" id="heroPrev" aria-label="Previous photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-  </div>
-  <div class="hero-dots" id="heroDots"></div>
-</section>
-
-<!-- ================= STATS ================= -->
-<section class="stats-strip">
-  <div class="wrap">
-    <div class="stat reveal-left"><h3 data-count="2022" data-suffix="">2022</h3><p>Founded</p></div>
-    <div class="stat reveal-left"><h3 data-count="102" data-suffix="+">0</h3><p>Pupils enrolled</p></div>
-    <div class="stat reveal-right"><h3 data-count="22" data-suffix="+">0</h3><p>Teachers & staff</p></div>
-    <div class="stat reveal-right"><h3 data-count="1234" data-suffix="+">0</h3><p>Residents reached</p></div>
-  </div>
-</section>
-
-<!-- ================= IMPACT ================= -->
-<section class="section impact" id="impact">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow reveal-left">Choose us</span>
-      <h2 class="reveal-right">Our school's impact</h2>
+    <div class="hero-arrows">
+      <button class="hero-arrow" id="heroNext" aria-label="Next photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+      </button>
+      <button class="hero-arrow" id="heroPrev" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
     </div>
-    <div class="impact-grid">
-      <div class="impact-card reveal-left">
-        <div class="impact-frame"><img loading="lazy" decoding="async" src="images/3.webp" alt="Students at St.Charles Learning Center"></div>
-        <div class="impact-panel">
-          <div class="panel-top">
-            <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
-            <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+    <div class="hero-dots" id="heroDots"></div>
+  </section>
+
+  <section class="stats-strip">
+    <div class="wrap">
+      <div class="stat reveal-left"><h3 data-count="2022" data-suffix="">2022</h3><p>Founded</p></div>
+      <div class="stat reveal-left"><h3 data-count="102" data-suffix="+">0</h3><p>Pupils enrolled</p></div>
+      <div class="stat reveal-right"><h3 data-count="22" data-suffix="+">0</h3><p>Teachers & staff</p></div>
+      <div class="stat reveal-right"><h3 data-count="1234" data-suffix="+">0</h3><p>Residents reached</p></div>
+    </div>
+  </section>
+
+  <section class="director-section">
+    <div class="wrap director-grid">
+      <div class="director-photo-card reveal-left">
+        <div class="photo-wrap">
+          <img loading="lazy" src="images/teaching.jpg" alt="Director of St. Charles Learning Centre speaking with teachers and students">
+          <div class="director-badge">
+            <strong>Director</strong>
+            <span>St. Charles Learning Centre</span>
           </div>
-          <h3>Students</h3>
-          <p>Although enrollment keeps growing, the school urgently needs three permanent classrooms to replace the temporary wooden shelter children currently study under.</p>
+        </div>
+        <div class="director-copy reveal-right">
+        <div class="director-mark">“</div>
+        <span class="eyebrow">A word from the director</span>
+        <h3>Dear friends and partners,</h3>
+        <p class="intro">Greetings from St. Charles Learning Centre. We are a humble school with a big dream: to provide quality education, hope, and a brighter future for vulnerable children in Kamarya Village, Kiruhura District.</p>
+        <div class="director-quote">
+          <p>Our children face major challenges, including limited classroom space, poor learning conditions, and the daily struggle for basic opportunities. Yet they continue to show resilience, curiosity, and determination. We believe that education is the key that can break the cycle of poverty and unlock a better tomorrow.</p>
+        </div>
+        <div class="director-more" id="directorMore">
+          <p>Beyond the walls of our school, these children navigate daily obstacles that would break the spirit of many. Some walk over 5 kilometers every morning to attend classes, while others study after laboring in fields. Despite these hardships, their commitment to learning never wavers. They remind us every single day why our mission is so critical and why we must succeed.</p>
+          <p style="margin-top:14px;">The potential within these children is extraordinary—they are curious, ambitious, and dreaming of futures as teachers, doctors, engineers, and leaders. What they lack is not ambition but resources and opportunity. A permanent classroom block would transform their learning environment from a leaky wooden shelter to a safe, dignified space where they can focus entirely on their studies.</p>
+          <p style="margin-top:14px;">We therefore appeal to your compassion and generosity. Whether you are an individual, business, church, or organization, your support can directly change the trajectory of children's lives. Your contribution helps us complete our classroom construction, provide quality learning materials, offer nutritious meals, and create the safe, conducive environment these deserving children deserve.</p>
+          <p style="margin-top:14px;">Every donation, no matter the size, brings us closer to this vision. By investing in St. Charles Learning Centre, you are not simply building classrooms—you are building futures, breaking cycles of poverty, and transforming an entire community for generations to come. Together, we can turn these dreams into lasting reality.</p>
+        </div>
+        <div class="director-actions">
+          <a class="btn btn-plum" href="https://wa.me/256702859676" target="_blank" rel="noopener">Contact the Director</a>
+          <button class="btn btn-accent director-toggle" type="button" id="toggleDirectorWords">Read more</button>
         </div>
       </div>
-      <div class="impact-card reveal-left">
-        <div class="impact-frame"><img loading="lazy" decoding="async" src="images/staff.webp" alt="St.Charles teaching staff"></div>
-        <div class="impact-panel">
-          <div class="panel-top">
-            <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-            <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+    </div>
+  </section>
+
+  <section class="section" id="purpose">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Our guiding foundation</span>
+        <h2 class="reveal-right">Mission, vision & core values</h2>
+      </div>
+      <div class="purpose-grid">
+        <article class="purpose-card reveal-left">
+          <div class="card-image">
+            <span class="purpose-badge">Mission</span>
+            <img src="images/4.webp" alt="Mission statement illustration">
           </div>
-          <h3>Teachers</h3>
-          <p>Our team of 22 dedicated teachers and support staff forms the backbone of the school, working tirelessly so no child is left behind.</p>
-        </div>
-      </div>
-      <div class="impact-card reveal-right">
-        <div class="impact-frame"><img loading="lazy" decoding="async" src="images/community.webp" alt="Community members at the school"></div>
-        <div class="impact-panel">
-          <div class="panel-top">
-            <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-            <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+          <div class="card-content">
+            <h3>Mission</h3>
+            <p>To provide safe, inclusive, and quality education to vulnerable children in Kamarya Village, while empowering them with knowledge, skills, and values for a better future.</p>
           </div>
-          <h3>Community</h3>
-          <p>Beyond educating children, the school is a hub for more than 1,234 local residents — hosting literacy, health and youth training during holidays.</p>
-        </div>
-      </div>
-      <div class="impact-card reveal-right">
-        <div class="impact-frame"><img loading="lazy" decoding="async" src="images/5.jpg" alt="School building under the Uganda flag"></div>
-        <div class="impact-panel">
-          <div class="panel-top">
-            <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-            <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+        </article>
+
+        <article class="purpose-card reveal-right">
+          <div class="card-image">
+            <span class="purpose-badge">Vision</span>
+            <img src="images/excel.webp" alt="Vision statement illustration">
           </div>
-          <h3>United Nations SDGs</h3>
-          <p>Our work is aligned with Sustainable Development Goal 4 — quality education — as a driver of long-term opportunity for the village.</p>
+          <div class="card-content">
+            <h3>Vision</h3>
+            <p>To become a leading center of academic excellence, character formation, and community transformation, where every child can grow into a responsible and productive citizen.</p>
+          </div>
+        </article>
+
+        <article class="purpose-card reveal-left">
+          <div class="card-image">
+            <span class="purpose-badge">Values</span>
+            <img src="images/community.webp" alt="Core values illustration">
+          </div>
+          <div class="card-content">
+            <h3>Core Values</h3>
+            <p>Integrity, compassion, excellence, inclusion, discipline, unity, and faith in the potential of every child to learn, lead, and contribute to society.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section impact" id="impact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Choose us</span>
+        <h2 class="reveal-right">Our school's impact</h2>
+      </div>
+      <div class="impact-grid">
+        <div class="impact-card reveal-left">
+          <div class="impact-frame"><img loading="lazy" src="images/3.webp" alt="Students at St.Charles Learning Center"></div>
+          <div class="impact-panel">
+            <div class="panel-top">
+              <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></span>
+              <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"></path></svg></span>
+            </div>
+            <h3>Students</h3>
+            <p>Although enrollment keeps growing, the school urgently needs three permanent classrooms to replace the temporary wooden shelter children currently study under.</p>
+          </div>
+        </div>
+        <div class="impact-card reveal-left">
+          <div class="impact-frame"><img loading="lazy" src="images/staff.webp" alt="St.Charles teaching staff"></div>
+          <div class="impact-panel">
+            <div class="panel-top">
+              <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+              <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"></path></svg></span>
+            </div>
+            <h3>Teachers</h3>
+            <p>Our team of 22 dedicated teachers and support staff forms the backbone of the school, working tirelessly so no child is left behind.</p>
+          </div>
+        </div>
+        <div class="impact-card reveal-right">
+          <div class="impact-frame"><img loading="lazy" src="images/community.webp" alt="Community members at the school"></div>
+          <div class="impact-panel">
+            <div class="panel-top">
+              <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+              <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"></path></svg></span>
+            </div>
+            <h3>Community</h3>
+            <p>Beyond educating children, the school is a hub for more than 1,234 local residents — hosting literacy, health and youth training during holidays.</p>
+          </div>
+        </div>
+        <div class="impact-card reveal-right">
+          <div class="impact-frame"><img loading="lazy" src="images/5.jpg" alt="School building under the Uganda flag"></div>
+          <div class="impact-panel">
+            <div class="panel-top">
+              <span class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg></span>
+              <span class="panel-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"></path></svg></span>
+            </div>
+            <h3>United Nations SDGs</h3>
+            <p>Our work is aligned with Sustainable Development Goal 4 — quality education — as a driver of long-term opportunity for the village.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= ABOUT ================= -->
-<section class="section about" id="about">
-  <div class="wrap">
-    <div class="about-media reveal-left">
-      <div class="about-badge"><strong>2022</strong><span>Existing since</span></div>
-      <div class="photo-main"><img loading="lazy" decoding="async" src="images/teaching.jpg" alt="Teacher working with pupils at St.Charles"></div>
-    </div>
-    <div class="about-content reveal-right">
-      <span class="eyebrow">About us</span>
-      <h2>More about our school</h2>
-      <div class="about-tabs">
-        <button class="tab-btn active" data-tab="history">Our History</button>
-        <button class="tab-btn" data-tab="school">School</button>
-        <button class="tab-btn" data-tab="projects">Ongoing Projects</button>
+  <section class="section about" id="about">
+    <div class="wrap">
+      <div class="about-media reveal-left">
+        <div class="about-badge"><strong>2022</strong><span>Existing since</span></div>
+        <div class="photo-main"><img loading="lazy" src="images/teaching.jpg" alt="Teacher working with pupils at St.Charles"></div>
       </div>
-      <div class="about-copy active" data-panel="history">
-        <p>We are a private mixed day primary school that believes in creating opportunities and empowering young people through education. St.Charles Learning Center was established in 2022 with a goal of providing basic primary education to needy children in Kamarya Village, Kiruhura District, in Western Uganda. The school is registered under the Uganda Ministry of Education and Sports.</p>
-      </div>
-      <div class="about-copy" data-panel="school">
-        <p>St.Charles Learning Center currently has an enrollment of 102 children — 52 girls and 50 boys — supported by 22 teachers and staff. Lessons are taught in a temporary wooden shelter while a permanent classroom block is under construction to give pupils a safe, weather-resistant space to learn.</p>
-      </div>
-      <div class="about-copy" data-panel="projects">
-        <p>Our flagship ongoing project is the Classroom Block Construction Project — replacing the wooden shelter that floods during rains with a permanent block that will also serve as a venue for community training and youth empowerment workshops.</p>
-      </div>
-      <ul class="about-points">
-        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#0F3324" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>We believe knowledge is power</li>
-        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#0F3324" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Education is a human right</li>
-      </ul>
-      <a class="btn btn-plum" style="margin-top:26px;" href="#contact">Contact us</a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= OBJECTIVES ================= -->
-<section class="section objectives" id="objectives">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow reveal-left">We work to bring smiles, hope, and a brighter future</span>
-      <h2 class="reveal-right">Our school objectives</h2>
-    </div>
-    <div class="obj-grid">
-      <div class="obj-card reveal-left">
-        <div>
-          <h3>Social Inclusion</h3>
-          <p>To provide basic education to the poor children of Kamarya Village.</p>
+      <div class="about-content reveal-right">
+        <span class="eyebrow">About us</span>
+        <h2>More about our school</h2>
+        <div class="about-tabs">
+          <button class="tab-btn active" data-tab="history">Our History</button>
+          <button class="tab-btn" data-tab="school">School</button>
+          <button class="tab-btn" data-tab="projects">Ongoing Projects</button>
         </div>
-        <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6M16 6v6M2 12h20M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/></svg></div>
-      </div>
-      <div class="obj-card reveal-right">
-        <div>
-          <h3>Pro-literacy</h3>
-          <p>To reduce the high level of illiteracy in the area of Kamarya Village.</p>
+        <div class="about-copy active" data-panel="history">
+          <p>We are a private mixed day primary school that believes in creating opportunities and empowering young people through education. St.Charles Learning Centre was established in 2022 with a goal of providing basic primary education to needy children in Kamarya Village, Kiruhura District, in Western Uganda. The school is registered under the Uganda Ministry of Education and Sports.</p>
         </div>
-        <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-      </div>
-      <div class="obj-card reveal-left">
-        <div>
-          <h3>Girl-Child Education</h3>
-          <p>To improve girl-child education across the area.</p>
+        <div class="about-copy" data-panel="school">
+          <p>St.Charles Learning Centre currently has an enrollment of 102 children — 52 girls and 50 boys — supported by 22 teachers and staff. Lessons are taught in a temporary wooden shelter while a permanent classroom block is under construction to give pupils a safe, weather-resistant space to learn.</p>
         </div>
-        <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 4.9L20 8l-4 3.9.9 5.5L12 15l-4.9 2.4L8 11.9 4 8l5.6-1.1z"/></svg></div>
-      </div>
-      <div class="obj-card reveal-right">
-        <div>
-          <h3>Skilling</h3>
-          <p>To create space for skilling village youth and students.</p>
+        <div class="about-copy" data-panel="projects">
+          <p>Our flagship ongoing project is the Classroom Block Construction Project — replacing the wooden shelter that floods during rains with a permanent block that will also serve as a venue for community training and youth empowerment workshops.</p>
         </div>
-        <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <ul class="about-points">
+          <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#0F3324" stroke-width="3"><path d="M20 6L9 17l-5-5"></path></svg></span>We believe knowledge is power</li>
+          <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#0F3324" stroke-width="3"><path d="M20 6L9 17l-5-5"></path></svg></span>Education is a human right</li>
+        </ul>
+        <a class="btn btn-plum" style="margin-top:26px;" href="#contact">Contact us</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= GALLERY ================= -->
-<section class="section" id="gallery">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow reveal-left">School gallery</span>
-      <h2 class="reveal-right">The beautiful moments keep us going</h2>
+  <section class="section objectives" id="objectives">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">We work to bring smiles, hope, and a brighter future</span>
+        <h2 class="reveal-right">Our school objectives</h2>
+      </div>
+      <div class="obj-grid">
+        <div class="obj-card reveal-left">
+          <div>
+            <h3>Social Inclusion</h3>
+            <p>To provide basic education to the poor children of Kamarya Village.</p>
+          </div>
+          <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6M16 6v6M2 12h20M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path></svg></div>
+        </div>
+        <div class="obj-card reveal-right">
+          <div>
+            <h3>Pro-literacy</h3>
+            <p>To reduce the high level of illiteracy in the area of Kamarya Village.</p>
+          </div>
+          <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></div>
+        </div>
+        <div class="obj-card reveal-left">
+          <div>
+            <h3>Girl-Child Education</h3>
+            <p>To improve girl-child education across the area.</p>
+          </div>
+          <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 4.9L20 8l-4 3.9.9 5.5L12 15l-4.9 2.4L8 11.9 4 8l5.6-1.1z"></path></svg></div>
+        </div>
+        <div class="obj-card reveal-right">
+          <div>
+            <h3>Skilling</h3>
+            <p>To create space for skilling village youth and students.</p>
+          </div>
+          <div class="obj-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></div>
+        </div>
+      </div>
     </div>
-    <div class="gallery-grid">
-      <a class="reveal-left" href="images/excel.webp" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="images/excel.webp" alt="School gallery photo"></a>
-      <a class="reveal-right" href="images/7.jpg" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="images/7.jpg" alt="School gallery photo"></a>
-      <a class="reveal-left" href="images/students.jpg" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="images/students.jpg" alt="School gallery photo"></a>
-      <a class="reveal-right" href="images/4.webp" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="images/4.webp" alt="School gallery photo"></a>
-      <a class="reveal-left" href="images/class2.webp" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="images/class2.webp" alt="School gallery photo"></a>
-      <a class="reveal-right" href="images/3.webp" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="images/3.webp" alt="School gallery photo"></a>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= PROJECT ================= -->
-<section class="section project" id="project">
-  <div class="wrap">
-    <div class="project-copy reveal-left">
-      <span class="eyebrow">Ongoing project</span>
-      <h2>The Classroom Block Construction Project</h2>
-      <p>St.Charles Learning Center was established in 2022 to provide basic education to needy and poor children in Kamarya Village. The school currently has an enrollment of 102 children — 52 girls and 50 boys — but is facing a shortage of classroom space for daily lessons. Children currently study under a shelter made of wood and timber; when it rains, water enters the shelter and disrupts lessons and damages learning aids.</p>
-      <p>It is on this background that we are requesting your charitable support to help construct a new classroom block and create a decent learning environment for our children.</p>
-      <div class="project-progress">
-        <div class="bar"><div class="fill"></div></div>
-        <div class="labels"><span>38% funded</span><span>Goal: help us finish the block</span></div>
+  <section class="section" id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">School gallery</span>
+        <h2 class="reveal-right">The beautiful moments keep us going</h2>
       </div>
-      <a class="btn btn-plum" style="margin-top:22px;" href="#contact">Support this project</a>
+      <div class="gallery-grid">
+        <a class="reveal-left" href="images/excel.webp" target="_blank" rel="noopener"><img loading="lazy" src="images/excel.webp" alt="School gallery photo"></a>
+        <a class="reveal-right" href="images/7.jpg" target="_blank" rel="noopener"><img loading="lazy" src="images/7.jpg" alt="School gallery photo"></a>
+        <a class="reveal-left" href="images/students.jpg" target="_blank" rel="noopener"><img loading="lazy" src="images/students.jpg" alt="School gallery photo"></a>
+        <a class="reveal-right" href="images/4.webp" target="_blank" rel="noopener"><img loading="lazy" src="images/4.webp" alt="School gallery photo"></a>
+        <a class="reveal-left" href="images/class2.webp" target="_blank" rel="noopener"><img loading="lazy" src="images/class2.webp" alt="School gallery photo"></a>
+        <a class="reveal-right" href="images/3.webp" target="_blank" rel="noopener"><img loading="lazy" src="images/3.webp" alt="School gallery photo"></a>
+      </div>
     </div>
-    <div class="project-photo reveal-right"><img loading="lazy" decoding="async" src="images/building.webp" alt="New classroom block under construction"></div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= CONTACT ================= -->
-<section class="section contact" id="contact">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow reveal-left">Get in touch</span>
-      <h2 class="reveal-right">Contact us</h2>
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Questions & answers</span>
+        <h2 class="reveal-right">Frequently asked questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal-left">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>How can I donate to St.Charles Learning Center?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>You can donate through MTN Mobile Money or Airtel Money using the "Support Our Mission" button on this page, which walks you through the payment code step by step. You can also reach the Director directly on WhatsApp to arrange your contribution.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal-right">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>Where is the school located?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>St.Charles Learning Center is located in Kamarya Village, Kiruhura District, Uganda. It was established in 2022 to provide basic education to needy and poor children in the area.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal-left">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>How many children and staff does the school currently have?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The school currently has an enrollment of 102 children — 52 girls and 50 boys — supported by 22 dedicated teachers and support staff.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal-right">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span>What is the classroom block construction project?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Children currently study under a shelter made of wood and timber, which lets in water and disrupts lessons when it rains. We are raising support to construct a permanent classroom block so pupils have a safe, weather-resistant space to learn.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="contact-grid">
-      <div class="contact-card reveal-left">
-        <div class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        <h3>Phone lines</h3>
-        <a class="phone-link" href="tel:+256705505474">0705 505 474</a>
-        <span class="tag">WhatsApp / Booking</span>
-        <p style="margin-top:12px;">
-          <span class="phone-row">
-            <a class="phone-link" href="tel:+256781704061">0781 704 061</a>
-            <span class="sep">/</span>
-            <a class="phone-link" href="tel:+256749479749">0749 479 749</a>
-          </span>
-        </p>
-      </div>
-      <div class="contact-card reveal-right">
-        <div class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div>
-        <h3>Email</h3>
-        <a href="mailto:tashpreston2002@gmail.com">tashpreston2002@gmail.com</a>
-        <p style="margin-top:10px;">We usually reply within a day.</p>
-      </div>
-      <div class="contact-card reveal-left">
-        <div class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h3>Location</h3>
-        <p>Kamarya Village, Kiruhura District<br>Western Uganda</p>
-        <p style="margin-top:10px;">Open 9:30am – 5:30pm, Mon–Sat</p>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================= FOOTER ================= -->
+  <section class="section testimonials" id="testimonials">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Voices of support</span>
+        <h2 class="reveal-right">What people say about us</h2>
+      </div>
+      <div class="testimonial-stage" id="testimonialStage">
+        <div class="testimonial-card active">
+          <p class="testimonial-quote">Visiting St.Charles Learning Center changed how I see giving. The children's excitement to learn, even under a leaking shelter, is unforgettable.</p>
+          <div class="testimonial-name">Grace Namutebi</div>
+          <div class="testimonial-role">Volunteer, Kampala</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">Our small monthly donation goes further than I expected. The updates the Director sends us make it feel personal, not just a transaction.</p>
+          <div class="testimonial-name">Robert Tumusiime</div>
+          <div class="testimonial-role">Monthly Donor</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">My daughter joined St.Charles two years ago and has grown so much in confidence. The teachers genuinely care about every child.</p>
+          <div class="testimonial-name">Sarah Kobusingye</div>
+          <div class="testimonial-role">Parent</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">Despite limited resources, the teachers here go above and beyond. It's clear this is more than a job for them — it's a calling.</p>
+          <div class="testimonial-name">Patrick Ssenyonga</div>
+          <div class="testimonial-role">Education Consultant</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">We partnered with St.Charles for a school supplies drive, and the transparency around how donations were used gave us full confidence to return.</p>
+          <div class="testimonial-name">Immaculate Nabirye</div>
+          <div class="testimonial-role">Partner Organization Rep</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">Even studying under a wooden shelter, these children come to class every day with joy. Supporting the classroom block is one of the best decisions I've made.</p>
+          <div class="testimonial-name">David Byaruhanga</div>
+          <div class="testimonial-role">Community Donor</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">I've worked with several rural schools, and the level of care and record-keeping at St.Charles stands out. It's a well-run, trustworthy institution.</p>
+          <div class="testimonial-name">Faith Alupo</div>
+          <div class="testimonial-role">NGO Program Officer</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">As an alumna's aunt, I've watched this school grow from nothing into a place full of hope. Every shilling donated is visible in the children's progress.</p>
+          <div class="testimonial-name">Christine Nansubuga</div>
+          <div class="testimonial-role">Family Supporter</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">The Director's dedication is inspiring. He personally follows up with donors and keeps everyone informed about the classroom project's progress.</p>
+          <div class="testimonial-name">Emmanuel Okello</div>
+          <div class="testimonial-role">Church Partner</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">We sponsored meals for a term and saw firsthand how much a proper meal changes a child's ability to focus and learn. Worth every contribution.</p>
+          <div class="testimonial-name">Brenda Achieng</div>
+          <div class="testimonial-role">Meal Program Sponsor</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">A truly needy but hopeful community. St.Charles Learning Center is doing incredible work with very little, and it deserves far more support.</p>
+          <div class="testimonial-name">Joseph Mugisha</div>
+          <div class="testimonial-role">First-time Visitor</div>
+        </div>
+      </div>
+      <div class="testimonial-dots" id="testimonialDots"></div>
+    </div>
+  </section>
+
+  <section class="section" id="inquiry">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Get in touch</span>
+        <h2 class="reveal-right">Ask us anything</h2>
+      </div>
+      <form class="inquiry-form reveal-left" id="inquiryForm" onsubmit="return sendInquiryToWhatsApp(event)">
+        <div class="inquiry-field">
+          <label for="inquiryName">Full Name</label>
+          <input type="text" id="inquiryName" placeholder="Your name" required>
+        </div>
+        <div class="inquiry-field">
+          <label for="inquiryEmail">Email (optional)</label>
+          <input type="email" id="inquiryEmail" placeholder="you@example.com">
+        </div>
+        <div class="inquiry-field">
+          <label for="inquiryPhone">Phone Number</label>
+          <input type="tel" id="inquiryPhone" placeholder="e.g. 07XXXXXXXX" required>
+        </div>
+        <div class="inquiry-field">
+          <label for="inquiryMessage">Your Inquiry</label>
+          <textarea id="inquiryMessage" placeholder="Ask us anything about the school, donations, or visiting..." required></textarea>
+          <div class="inquiry-error" id="inquiryError">Please fill in your name, phone number, and inquiry before sending.</div>
+        </div>
+        <button type="submit" class="btn btn-whatsapp" style="justify-content:center;">Send via WhatsApp</button>
+        <p class="inquiry-note">Clicking send opens WhatsApp with your message pre-filled to the Director. You can review it before sending.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section project" id="project">
+    <div class="wrap">
+      <div class="project-copy reveal-left">
+        <span class="eyebrow">Ongoing project</span>
+        <h2>The Classroom Block Construction Project</h2>
+        <p>St.Charles Learning Centre was established in 2022 to provide basic education to needy and poor children in Kamarya Village. The school currently has an enrollment of 102 children — 52 girls and 50 boys — but faces a shortage of classroom space for daily lessons. Children currently study under a shelter made of wood and timber; when it rains, water enters the shelter and disrupts lessons and damages learning aids.</p>
+        <p>It is on this background that we are requesting your charitable support to help construct a new classroom block and create a decent learning environment for our children.</p>
+        <div class="project-progress">
+          <div class="bar"><div class="fill"></div></div>
+          <div class="labels"><span>38% funded</span><span>Goal: help us finish the block</span></div>
+        </div>
+        <a class="btn btn-plum" style="margin-top:22px;" href="#contact">Support this project</a>
+      </div>
+      <div class="project-photo reveal-right"><img loading="lazy" src="images/building.webp" alt="New classroom block under construction"></div>
+    </div>
+  </section>
+
+  <section class="section support" id="support">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Our greatest challenges</span>
+        <h2 class="reveal-right">Why we need your support</h2>
+      </div>
+      <div class="support-grid">
+        <div class="support-card reveal-left">
+          <div class="support-card-icon">🏫</div>
+          <h3>Classroom Shortage</h3>
+          <p>Our 102 pupils currently study under a wooden shelter that floods during rainy season. We urgently need permanent classrooms to provide a safe, dignified learning environment.</p>
+        </div>
+        <div class="support-card reveal-right">
+          <div class="support-card-icon">📚</div>
+          <h3>Learning Materials</h3>
+          <p>Limited textbooks, exercise books, and educational resources mean students struggle to keep up with lessons. Quality materials are essential for effective learning and academic success.</p>
+        </div>
+        <div class="support-card reveal-left">
+          <div class="support-card-icon">🍽️</div>
+          <h3>Student Nutrition</h3>
+          <p>Many children come to school on empty stomachs after helping with farm work. Nutritious meals would improve concentration, health, and academic performance significantly.</p>
+        </div>
+        <div class="support-card reveal-right">
+          <div class="support-card-icon">👨‍🏫</div>
+          <h3>Teacher Welfare</h3>
+          <p>Our 22 dedicated teachers work with minimal resources and low compensation. Better teacher support ensures quality instruction and reduces staff turnover in our school.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:48px;">
+        <button class="btn btn-support-open" onclick="openSupportModal()">Support Our Mission</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sponsor" id="sponsor">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">A personal commitment</span>
+        <h2 class="reveal-right">Sponsor a child</h2>
+        <p style="margin-top:14px;color:var(--muted);">Sponsoring a child gives one pupil consistent access to school fees, materials, and meals for the term. You can follow their progress directly through the Director.</p>
+      </div>
+      <div class="sponsor-grid">
+        <div class="sponsor-tier reveal-left">
+          <div class="sponsor-tier-icon">📘</div>
+          <h3>Termly Sponsor</h3>
+          <div class="sponsor-price">One term</div>
+          <p>Covers one child's tuition, exercise books, and basic learning materials for a full school term.</p>
+          <a class="btn btn-whatsapp" style="width:100%;justify-content:center;" href="https://wa.me/256702859676?text=Hello%20St.Charles%20Learning%20Center%2C%20I%20would%20like%20to%20become%20a%20Termly%20Sponsor%20for%20a%20child.%20Please%20share%20more%20details." target="_blank" rel="noopener">Sponsor a Term</a>
+        </div>
+        <div class="sponsor-tier featured reveal-right">
+          <div class="sponsor-tier-icon">🎒</div>
+          <h3>Annual Sponsor</h3>
+          <div class="sponsor-price">Full year</div>
+          <p>Covers a full year of tuition, materials, and a school meal every day for one child, with regular progress updates.</p>
+          <a class="btn btn-accent" style="width:100%;justify-content:center;" href="https://wa.me/256702859676?text=Hello%20St.Charles%20Learning%20Center%2C%20I%20would%20like%20to%20become%20an%20Annual%20Sponsor%20for%20a%20child.%20Please%20share%20more%20details." target="_blank" rel="noopener">Sponsor a Year</a>
+        </div>
+        <div class="sponsor-tier reveal-left">
+          <div class="sponsor-tier-icon">🤝</div>
+          <h3>Group Sponsorship</h3>
+          <div class="sponsor-price">Flexible</div>
+          <p>Perfect for families, churches, or companies who want to sponsor several children together as a group.</p>
+          <a class="btn btn-whatsapp" style="width:100%;justify-content:center;" href="https://wa.me/256702859676?text=Hello%20St.Charles%20Learning%20Center%2C%20our%20group%20would%20like%20to%20discuss%20sponsoring%20multiple%20children.%20Please%20share%20more%20details." target="_blank" rel="noopener">Start a Group Sponsorship</a>
+        </div>
+      </div>
+      <p style="text-align:center;color:var(--muted);font-size:0.85rem;">Every sponsorship inquiry is followed up personally by the Director on WhatsApp to match you with a child and confirm the details.</p>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal-left">Get in touch</span>
+        <h2 class="reveal-right">Contact us</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card reveal-left">
+          <div class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+          <h3>Director contact</h3>
+          <a class="phone-link" href="tel:+256702859676">0702 859 676</a>
+          <span class="tag">Calls & WhatsApp</span>
+          <p style="margin-top:12px;">Reach the director directly for school updates, visits, or partnership enquiries.</p>
+        </div>
+        <div class="contact-card reveal-right">
+          <div class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"></path><path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></div>
+          <h3>Email</h3>
+          <a href="mailto:stcharleslearningcentre@gmail.com">stcharleslearningcentre@gmail.com</a>
+          <p style="margin-top:10px;">We usually reply within a day.</p>
+        </div>
+        <div class="contact-card reveal-left">
+          <div class="impact-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+          <h3>Location</h3>
+          <p>Kamarya Village, Kiruhura District<br>Western Uganda</p>
+          <p style="margin-top:10px;">Open 9:30am – 5:30pm, Mon–Sat</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
 <footer>
   <div class="wrap footer-top">
     <div class="footer-grid">
       <div class="footer-brand reveal-left">
-        <img loading="lazy" decoding="async" src="images/stcharles_logo.png" alt="St.Charles Learning Center crest">
+        <img loading="lazy" src="images/charles-badge.jpeg" alt="St.Charles Learning Centre crest">
         <p>Providing safe, inclusive and life-changing learning opportunities for vulnerable children in Kamarya Village.</p>
         <div class="footer-social">
-          <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48z"/></svg></a>
-          <a href="#" aria-label="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3 3 0 0 0-2.1-2.12C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.57A3 3 0 0 0 .5 6.19 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.81 3 3 0 0 0 2.1 2.12C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.57a3 3 0 0 0 2.1-2.12A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.81zM9.6 15.6V8.4L15.8 12z"/></svg></a>
+          <a href="https://wa.me/256702859676" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.1 0a11.9 11.9 0 0 0-10.3 18.17L0 24l5.97-1.57A11.9 11.9 0 0 0 12.1 24C18.73 24 24 18.72 24 12.1c0-3.18-1.24-6.17-3.48-8.62zm-8.42 18.07h-.01a9.86 9.86 0 0 1-5.02-1.38l-.36-.21-3.54.93 1-3.44-.24-.36A9.84 9.84 0 1 1 12.1 21.55zm5.4-7.33c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.08-.3-.15-1.26-.46-2.39-1.47-.88-.78-1.48-1.74-1.65-2.03-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.68-1.64-.93-2.25-.24-.58-.49-.5-.68-.51l-.58-.01a1.12 1.12 0 0 0-.82.38A2.72 2.72 0 0 0 6.2 8.8c0 1.53 1.3 2.02 1.48 2.16.17.13 2.02 3.08 4.9 4.32.68.29 1.21.47 1.62.6.68.21 1.29.18 1.77.11.54-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.28-.2-.58-.35z"></path></svg></a>
+          <a href="mailto:stcharleslearningcentre@gmail.com" aria-label="Email"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5.33L4 8.2V6l8 5.33L20 6v2.2z"></path></svg></a>
         </div>
       </div>
       <div class="reveal-right">
@@ -1004,22 +1661,22 @@
           <a href="#about">About Us</a>
           <a href="#objectives">Impact</a>
           <a href="#project">Projects</a>
-          <a href="#gallery">Media</a>
+          <a href="#gallery">Gallery</a>
         </div>
       </div>
       <div class="reveal-right">
         <h4>Contact us</h4>
         <div class="footer-contact-item">
-          <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
           <span>
-            <strong>0705 505 474</strong>
-            WhatsApp / Booking
+            <strong><a href="tel:+256702859676">0702 859 676</a></strong>
+            Director line
           </span>
         </div>
         <div class="footer-contact-item">
-          <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>
+          <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6l-10 7L2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></span>
           <span>
-            <strong>tashpreston2002@gmail.com</strong>
+            <strong><a href="mailto:stcharleslearningcentre@gmail.com">stcharleslearningcentre@gmail.com</a></strong>
             Email us anytime
           </span>
         </div>
@@ -1027,29 +1684,120 @@
     </div>
   </div>
   <div class="wrap footer-bottom">
-    <span>Copyright © <span id="year"></span> St.Charles Learning Center. All rights reserved.</span>
+    <span>Copyright © <span id="year"></span> St. Charles Learning Centre. All rights reserved.</span>
     <span>Powered by <a href="https://portifolio.prestontash.com/" target="_blank" rel="noopener" style="font-weight:700;">TashInTech</a></span>
   </div>
 </footer>
 
-<!-- ================= FLOATING WIDGET ================= -->
 <div class="float-widget">
   <span class="call-label">Call us</span>
-  <a class="call-btn" href="tel:+256705505474" aria-label="Call St.Charles Learning Center">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  <a class="call-btn" href="tel:+256702859676" aria-label="Call St. Charles Learning Centre">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
   </a>
   <div class="progress-btn" id="progressBtn">
     <svg width="52" height="52" viewBox="0 0 52 52">
-      <circle cx="26" cy="26" r="22" fill="none" stroke="#f1e6f5" stroke-width="4"/>
-      <circle id="progressRing" cx="26" cy="26" r="22" fill="none" stroke="#5B1A6B" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+      <circle cx="26" cy="26" r="22" fill="none" stroke="#f1e6f5" stroke-width="4"></circle>
+      <circle id="progressRing" cx="26" cy="26" r="22" fill="none" stroke="#5B1A6B" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="138.2"></circle>
     </svg>
     <span class="pct" id="progressPct">0%</span>
   </div>
 </div>
 
+<div class="support-modal" id="supportModal">
+  <div class="support-modal-container">
+    <button class="support-modal-close" onclick="closeSupportModal()">×</button>
+    
+    <!-- Step 1: Choose Provider -->
+    <div id="step1Provider" class="support-step">
+      <h2>Choose Your Provider</h2>
+      <p class="support-modal-subtitle">Select MTN or Airtel to make your donation</p>
+      
+      <div class="support-modal-options">
+        <div class="support-option mtn" onclick="selectProvider('mtn')">
+          <div class="support-option-title">🟡 MTN Mobile Money</div>
+          <div class="support-option-number">0781 704 061</div>
+          <div style="margin-top:8px;font-size:0.9rem;color:var(--accent);">→ Click to continue</div>
+        </div>
+
+        <div class="support-option airtel" onclick="selectProvider('airtel')">
+          <div class="support-option-title">🔴 Airtel Money</div>
+          <div class="support-option-number">0702 859 676</div>
+          <div style="margin-top:8px;font-size:0.9rem;color:var(--accent);">→ Click to continue</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Enter Amount -->
+    <div id="step2Amount" class="support-step" style="display:none;">
+      <h2>Enter Donation Amount</h2>
+      <p class="support-modal-subtitle" id="providerName"></p>
+      
+      <div style="background:#f9f9f9;padding:20px;border-radius:12px;margin-bottom:20px;">
+        <label style="display:block;font-weight:600;margin-bottom:8px;color:var(--ink);">
+          Amount to donate (UGX)
+        </label>
+        <input type="number" id="donationAmount" placeholder="Enter amount" style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;" min="1000" max="5000000">
+        <small style="display:block;margin-top:8px;color:var(--muted);">Minimum: 1,000 UGX | Maximum: 5,000,000 UGX</small>
+      </div>
+
+      <div class="support-actions">
+        <button class="btn btn-accent" onclick="generateUSSD()" style="width:100%;">Generate Payment Code</button>
+        <button class="btn" style="width:100%;background:#f0f0f0;color:var(--ink);margin-top:8px;" onclick="goBackToProvider()">Back to Provider Selection</button>
+      </div>
+    </div>
+
+    <!-- Step 3: USSD Code -->
+    <div id="step3USSD" class="support-step" style="display:none;">
+      <h2>Your Payment Code</h2>
+      <p class="support-modal-subtitle">Follow these steps to complete your donation</p>
+      
+      <div style="background:#fff3cd;border:2px solid #ffc300;border-radius:12px;padding:16px;margin-bottom:20px;">
+        <div style="font-weight:600;color:#000;margin-bottom:8px;">📋 How to pay:</div>
+        <ol style="margin:0;padding-left:20px;color:#333;font-size:0.9rem;line-height:1.8;">
+          <li>Dial the code below on your phone</li>
+          <li>Enter the amount when prompted</li>
+          <li>Confirm the transaction</li>
+          <li>You'll receive a confirmation message</li>
+        </ol>
+      </div>
+
+      <div style="background:#f5f5f5;border:2px solid #0066cc;border-radius:12px;padding:16px;margin-bottom:16px;">
+        <label style="display:block;font-weight:600;margin-bottom:8px;color:var(--ink);font-size:0.9rem;">
+          Your USSD Code:
+        </label>
+        <input type="text" id="ussdCode" readonly style="width:100%;padding:12px;border:2px solid #0066cc;border-radius:8px;font-family:monospace;font-size:1rem;font-weight:700;background:#fff;color:#0066cc;margin-bottom:8px;">
+        <button class="support-copy-btn" onclick="copyUSSD()" style="width:100%;padding:8px;">📋 Copy Code</button>
+      </div>
+
+      <div style="background:#f0f0f0;border-radius:12px;padding:16px;margin-bottom:12px;">
+        <label style="display:block;font-weight:600;margin-bottom:8px;color:var(--ink);font-size:0.9rem;">
+          Merchant Name (confirm this matches on your phone):
+        </label>
+        <input type="text" id="merchantNameDisplay" readonly style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-family:monospace;font-size:0.9rem;background:#fff;color:#666;">
+      </div>
+
+      <div style="background:#f0f0f0;border-radius:12px;padding:16px;margin-bottom:20px;">
+        <label style="display:block;font-weight:600;margin-bottom:8px;color:var(--ink);font-size:0.9rem;">
+          Merchant Code:
+        </label>
+        <input type="text" id="merchantCodeDisplay" readonly style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-family:monospace;font-size:0.9rem;background:#fff;color:#666;">
+      </div>
+
+      <div class="support-actions">
+        <a id="callProviderBtn" href="tel:0781704061" class="btn btn-mtn" style="display:block;text-align:center;">📞 Dial to Pay</a>
+        <button class="btn" style="width:100%;background:#f0f0f0;color:var(--ink);margin-top:8px;" onclick="startOver()">Make Another Donation</button>
+      </div>
+
+      <div class="support-alt-options">
+        <h4>Need help?</h4>
+        <a href="https://wa.me/256702859676" target="_blank" rel="noopener" class="support-alt-btn">📱 WhatsApp Support</a>
+        <a href="tel:+256702859676" class="support-alt-btn">☎️ Call Director</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  // keep --header-h in sync with the real (fixed) header height —
-  // fixes overlap on mobile where the top bar wraps to two lines
   function syncHeaderHeight(){
     const h = document.querySelector('.site-header').offsetHeight;
     document.documentElement.style.setProperty('--header-h', h + 'px');
@@ -1058,13 +1806,11 @@
   window.addEventListener('resize', syncHeaderHeight);
   window.addEventListener('load', syncHeaderHeight);
 
-  // mobile nav toggle
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-  // about tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1074,7 +1820,6 @@
     });
   });
 
-  // scroll progress ring
   const ring = document.getElementById('progressRing');
   const pctLabel = document.getElementById('progressPct');
   const circumference = 138.2;
@@ -1086,10 +1831,8 @@
     pctLabel.textContent = pct + '%';
   });
 
-  // footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // animated stat counters — replay every time they scroll into view
   const statEls = document.querySelectorAll('.stat h3[data-count]');
   const statObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1113,7 +1856,6 @@
   }, { threshold: 0.6 });
   statEls.forEach(el => statObserver.observe(el));
 
-  // hero background carousel
   const heroSlides = [
     'images/class2.webp',
     'images/students.jpg',
@@ -1135,7 +1877,7 @@
   }
   function restartHeroZoom(){
     heroBg.style.animation = 'none';
-    void heroBg.offsetWidth; // force reflow so the animation restarts
+    void heroBg.offsetWidth;
     heroBg.style.animation = 'heroZoomOut 9s ease-out forwards';
   }
   function setHeroSlide(i){
@@ -1153,13 +1895,104 @@
   }
   document.getElementById('heroNext').addEventListener('click', () => goToHeroSlide(heroIndex + 1));
   document.getElementById('heroPrev').addEventListener('click', () => goToHeroSlide(heroIndex - 1));
-  restartHeroZoom(); // slow reverse zoom on initial load
-  // restart the zoom every time the hero scrolls back into view
+  restartHeroZoom();
   new IntersectionObserver((entries) => {
     entries.forEach(entry => { if (entry.isIntersecting) restartHeroZoom(); });
   }, { threshold: 0.4 }).observe(document.getElementById('top'));
 
-  // scroll-reveal: left/right halves drop in and bounce together
+  const toggleDirectorWords = document.getElementById('toggleDirectorWords');
+  const directorMore = document.getElementById('directorMore');
+  toggleDirectorWords.addEventListener('click', () => {
+    const isOpen = directorMore.classList.toggle('open');
+    toggleDirectorWords.textContent = isOpen ? 'Read less' : 'Read more';
+  });
+
+  const supportModal = document.getElementById('supportModal');
+  let selectedProvider = null;
+  const merchantName = 'St.Charles Learning Center';
+  const mtnCode = '65288144';
+  const airtelCode = '7198871';
+
+  function openSupportModal(){ 
+    supportModal.classList.add('open');
+    startOver();
+  }
+  function closeSupportModal(){ 
+    supportModal.classList.remove('open');
+  }
+  supportModal.addEventListener('click', (event) => {
+    if (event.target === supportModal) closeSupportModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeSupportModal();
+  });
+
+  function selectProvider(provider) {
+    selectedProvider = provider;
+    const providerName = provider === 'mtn' ? '🟡 MTN Mobile Money' : '🔴 Airtel Money';
+    document.getElementById('providerName').textContent = `You selected ${providerName}`;
+    
+    document.getElementById('step1Provider').style.display = 'none';
+    document.getElementById('step2Amount').style.display = 'block';
+    document.getElementById('step3USSD').style.display = 'none';
+    document.getElementById('donationAmount').value = '';
+    document.getElementById('donationAmount').focus();
+  }
+
+  function goBackToProvider() {
+    document.getElementById('step1Provider').style.display = 'block';
+    document.getElementById('step2Amount').style.display = 'none';
+    document.getElementById('step3USSD').style.display = 'none';
+    selectedProvider = null;
+  }
+
+  function generateUSSD() {
+    const amount = document.getElementById('donationAmount').value;
+    
+    if (!amount || amount < 1000 || amount > 5000000) {
+      alert('Please enter an amount between 1,000 and 5,000,000 UGX');
+      return;
+    }
+
+    let ussdCode = '';
+    let merchantCode = '';
+    let callNumber = '';
+
+    if (selectedProvider === 'mtn') {
+      merchantCode = mtnCode;
+      ussdCode = `*165*3*${merchantCode}*${amount}#`;
+      callNumber = '0781704061';
+    } else if (selectedProvider === 'airtel') {
+      merchantCode = airtelCode;
+      ussdCode = `*185*9*${merchantCode}*${amount}#`;
+      callNumber = '+256702859676';
+    }
+
+    document.getElementById('ussdCode').value = ussdCode;
+    document.getElementById('merchantNameDisplay').value = merchantName;
+    document.getElementById('merchantCodeDisplay').value = merchantCode;
+    document.getElementById('callProviderBtn').href = `tel:${callNumber}`;
+
+    document.getElementById('step1Provider').style.display = 'none';
+    document.getElementById('step2Amount').style.display = 'none';
+    document.getElementById('step3USSD').style.display = 'block';
+  }
+
+  function copyUSSD() {
+    const ussdCode = document.getElementById('ussdCode');
+    ussdCode.select();
+    document.execCommand('copy');
+    alert('USSD code copied! You can now dial it on your phone.');
+  }
+
+  function startOver() {
+    document.getElementById('step1Provider').style.display = 'block';
+    document.getElementById('step2Amount').style.display = 'none';
+    document.getElementById('step3USSD').style.display = 'none';
+    document.getElementById('donationAmount').value = '';
+    selectedProvider = null;
+  }
+
   const revealEls = document.querySelectorAll('.reveal-left, .reveal-right');
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1171,7 +2004,6 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   revealEls.forEach(el => revealObserver.observe(el));
 
-  // active nav link on scroll
   const sections = ['top','about','objectives','project','gallery'].map(id => document.getElementById(id)).filter(Boolean);
   const navA = document.querySelectorAll('.nav-links a');
   const navObserver = new IntersectionObserver((entries) => {
@@ -1182,6 +2014,78 @@
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(sec => navObserver.observe(sec));
+
+  /* ---------- FAQ ---------- */
+  function toggleFAQ(btn){
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item.open').forEach(openItem => {
+      if (openItem !== item){
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-answer').style.maxHeight = null;
+      }
+    });
+
+    if (isOpen){
+      item.classList.remove('open');
+      answer.style.maxHeight = null;
+    } else {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  const testimonialCards = document.querySelectorAll('.testimonial-card');
+  const testimonialDotsWrap = document.getElementById('testimonialDots');
+  let testimonialIndex = 0;
+
+  testimonialCards.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+    testimonialDotsWrap.appendChild(dot);
+  });
+  const testimonialDots = document.querySelectorAll('.testimonial-dot');
+
+  function showTestimonial(i){
+    testimonialCards[testimonialIndex].classList.remove('active');
+    testimonialDots[testimonialIndex].classList.remove('active');
+    testimonialIndex = (i + testimonialCards.length) % testimonialCards.length;
+    testimonialCards[testimonialIndex].classList.add('active');
+    testimonialDots[testimonialIndex].classList.add('active');
+  }
+
+  if (testimonialCards.length > 1){
+    setInterval(() => showTestimonial(testimonialIndex + 1), 4000);
+  }
+
+  /* ---------- INQUIRY FORM ---------- */
+  function sendInquiryToWhatsApp(event){
+    event.preventDefault();
+    const name = document.getElementById('inquiryName').value.trim();
+    const email = document.getElementById('inquiryEmail').value.trim();
+    const phone = document.getElementById('inquiryPhone').value.trim();
+    const message = document.getElementById('inquiryMessage').value.trim();
+    const errorEl = document.getElementById('inquiryError');
+
+    if (!name || !phone || !message){
+      errorEl.classList.add('show');
+      return false;
+    }
+    errorEl.classList.remove('show');
+
+    let text = `Hello St.Charles Learning Center, I have an inquiry.%0A%0A`;
+    text += `*Name:* ${encodeURIComponent(name)}%0A`;
+    if (email) text += `*Email:* ${encodeURIComponent(email)}%0A`;
+    text += `*Phone:* ${encodeURIComponent(phone)}%0A`;
+    text += `*Inquiry:* ${encodeURIComponent(message)}`;
+
+    window.open(`https://wa.me/256702859676?text=${text}`, '_blank');
+    document.getElementById('inquiryForm').reset();
+    return false;
+  }
 </script>
 </body>
 </html>
